@@ -62,6 +62,17 @@ BOOL CEditListCtrl::NonEditCell(int iRow, int iCol)
 	return FALSE;
 }
 
+void CEditListCtrl::Initialize()
+{
+	if( !this->GetSafeHwnd() ) return;
+
+	// Set un-edit columns
+	INT_SET nonEditCol;
+	nonEditCol.insert(0);
+	nonEditCol.insert(1);
+	nonEdit[NONEDIT_BY_COL] = nonEditCol;
+}
+
 void CEditListCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default

@@ -133,9 +133,33 @@ BOOL CEditListCtrlSampleDlg::OnInitDialog()
 
 
 	//m_EditListCtrl≥ı ºªØ
-	m_EditListCtrl.InsertColumn(0, "Column1", LVCFMT_LEFT, 100);
-	m_EditListCtrl.InsertColumn(1, "Column2", LVCFMT_LEFT, 100);
-	m_EditListCtrl.InsertColumn(2, "Column3", LVCFMT_LEFT, 100);
+	// Initial CList header
+	const CString strColLablel[] =
+	{
+		_T("Column1"),		
+		_T("Column2"),
+		_T("Column3")
+	};
+	const int nColSize[] =
+	{
+		30,
+		90,
+		45
+	};
+	LV_COLUMN lvCol;
+	lvCol.mask = LVCF_FMT|LVCF_WIDTH|LVCF_TEXT|LVCF_SUBITEM;
+	int k=_countof(strColLablel);
+	int nCol=0;
+	for (nCol = 0; nCol < _countof(strColLablel); nCol++)
+	{
+		lvCol.iSubItem	= nCol;
+		lvCol.pszText	= (TCHAR*)(LPCTSTR)strColLablel[nCol];
+		lvCol.cx		= nColSize[nCol];
+		lvCol.fmt		= LVCFMT_CENTER;
+		lvCol.iSubItem  = nCol;
+		// Insert the column.
+		m_EditListCtrl.InsertColumn(nCol, &lvCol);
+	}
 
 	m_EditListCtrl.InsertItem(0, "Item1");
 	m_EditListCtrl.SetItemText(0, 1, "SubItem1");
@@ -144,7 +168,13 @@ BOOL CEditListCtrlSampleDlg::OnInitDialog()
     m_EditListCtrl.InsertItem(1, "Item2");
 	m_EditListCtrl.SetItemText(1, 1, "SubItem1");
 	m_EditListCtrl.SetItemText(1, 2, "SubItem2");
-	
+
+	m_EditListCtrl.SetExtendedStyle(m_EditListCtrl.GetExtendedStyle()
+		|LVS_EX_FULLROWSELECT
+		|LVS_EX_GRIDLINES
+		|LVS_SHOWSELALWAYS);
+	m_EditListCtrl.Initialize();
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 

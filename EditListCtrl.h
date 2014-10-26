@@ -7,6 +7,9 @@
 // EditListCtrl.h : header file
 //
 
+#include <set>
+#include <map>
+
 /////////////////////////////////////////////////////////////////////////////
 //CItemEdit window
 
@@ -52,18 +55,19 @@ class CEditListCtrl : public CListCtrl
 public:
 	CEditListCtrl();
 
+	// Non-editable cells
+	enum NONEDIT_TYPE {
+		NONEDIT_BY_COL,
+		NONEDIT_BY_ROW,
+	};
 	typedef std::set<int> INT_SET;
 	typedef std::set<int>::iterator INT_SET_IT;
 	typedef std::map<NONEDIT_TYPE, INT_SET> INT_SET_MAP;
 	typedef std::map<NONEDIT_TYPE, INT_SET>::iterator INT_SET_MAP_IT;
 
-// Non-editable cells
-	enum NONEDIT_TYPE {
-		NONEDIT_BY_COL,
-		NONEDIT_BY_ROW,
-	};
-
 	INT_SET_MAP nonEdit; // NONEDIT_BY_COL,NONEDIT_BY_ROW case
+
+	void Initialize();
 
 // Attributes
 public:
@@ -95,6 +99,7 @@ protected:
 	//}}AFX_MSG
 	afx_msg void OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult);
 	DECLARE_MESSAGE_MAP()
+
 private:
 	int m_iSubItem;            //子项标识符
 	int m_iItem;               //主项标识符
